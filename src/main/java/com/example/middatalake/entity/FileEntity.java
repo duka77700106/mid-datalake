@@ -15,6 +15,9 @@ public class FileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fileName;
+    private String orginalName;
+    private String fileSize;
+    private String fileType;
+
 
 }
