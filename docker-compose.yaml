@@ -1,0 +1,40 @@
+services:
+
+  db:
+    image: postgres:16
+    container_name: db-postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio-data-lake
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+
+
+
+
+  minio-setup:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: |
+      /bin/sh -c '
+        set -e
+        until mc alias set minio http://minio-data-lake:9000 minioadmin minioadmin >/dev/null 2>&1; do
+          sleep 2
+        done
+        mc mb -p minio/my-bucket || true
+      '
