@@ -1,6 +1,7 @@
 package com.example.middatalake.services;
 
 
+import com.example.middatalake.entity.FileEntity;
 import com.example.middatalake.repository.FileRepository;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
@@ -25,6 +26,12 @@ public class FileService {
                             .stream(stream, file.getSize(), -1)
                             .contentType(file.getContentType())
                             .build()
+            );
+
+            fileRepository.save(FileEntity.builder()
+                    .fileName(file.getOriginalFilename())
+                    .build()
+
             );
         }
 

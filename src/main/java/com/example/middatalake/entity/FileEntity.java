@@ -2,6 +2,7 @@ package com.example.middatalake.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import lombok.Setter;
 @Table(name = "t-file")
 @Getter
 @Setter
+@Builder
 public class FileEntity {
 
     @Id
